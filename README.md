@@ -1,14 +1,19 @@
 # movie
 
 ### install
-```
-$ pip install git+http...
+```bash
+# main
+$ pip install git+https://github.com/Kimwonjoon/kim_movie.git
+
+# branch
+$ pip install git+https://github.com/Kimwonjoon/kim_movie.git@<BRANCH_NAME>
 ```
 ### start dev
 ```
 $ git clone <URL>
 $ cd <DIR>
-$ # option
+
+# option
 $ pdm venv create
 $ source .venv/bin/activate
 ```
