@@ -1,4 +1,14 @@
-from mov.api.call import gen_url, req
+from mov.api.call import gen_url, req, get_key, req2dataframe
+
+def test_req2dataframe():
+    li = req2dataframe()
+    assert len(li) > 0
+    assert 'rnum' in li[0].keys()
+    assert li[0]['rnum'] == '1' 
+
+def test_key():
+    key = get_key()
+    assert key
 
 def test_gen_url():
     url = gen_url()
