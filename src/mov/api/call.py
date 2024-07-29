@@ -1,14 +1,14 @@
 import requests
 import os
 import pandas as pd
-def gen_url(load_dt):
+def gen_url(load_dt="20120101"):
     base_url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
     key = get_key()
     url = f'{base_url}?key={key}&targetDt={load_dt}'
 
     return url
 
-def req(load_dt):
+def req(load_dt="20120101"):
     url = gen_url(load_dt)
     res = requests.get(url)
     data = res.json()
@@ -20,12 +20,12 @@ def get_key():
     key = os.getenv('MOVIE_API_KEY')
     return key
 
-def req2list(load_dt) -> list:
+def req2list(load_dt="20120101") -> list:
     _, data = req(load_dt)
     li = data['boxOfficeResult']['dailyBoxOfficeList']
     return li
 
-def list2df(load_dt):
+def list2df(load_dt="20120101"):
     li = req2list(load_dt)
     df = pd.DataFrame(li)
     return df
