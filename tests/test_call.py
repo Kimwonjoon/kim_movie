@@ -1,0 +1,49 @@
+from mov.api.call import gen_url, req, get_key, req2list, list2df, save2df, echo, change2df
+import pandas as pd
+
+def test_change2df():
+    df = change2df()
+    assert isinstance(df, pd.DataFrame)
+    num_cols = ['rnum', 'rank', 'rankInten', 'salesAmt', 'audiCnt', 'audiAcc', 'scrnCnt', 'showCnt', 'salesShare', 'salesInten', 'salesChange', 'audiInten', 'audiChange']
+    for c in num_cols:
+        assert df[c].dtype in ['int','int64','float']
+
+def test_echo():
+    r = echo("hello")
+    assert r == "hello"
+
+def test_save2df():
+    df = save2df()
+    assert isinstance(df, pd.DataFrame)
+    assert "load_dt" in df.columns
+
+def test_list2df():
+    df = list2df()
+    assert isinstance(df, pd.DataFrame)
+    assert 'rnum' in df.columns
+    assert 'openDt' in df.columns
+    assert 'movieNm' in df.columns
+    assert 'audiAcc' in df.columns
+
+def test_req2list():
+    li = req2list()
+    assert len(li) > 0
+    assert 'rnum' in li[0].keys()
+    assert li[0]['rnum'] == '1' 
+
+def test_key():
+    key = get_key()
+    assert key
+
+def test_gen_url():
+    url = gen_url()
+    assert True
+    assert "http" in url
+    assert "kobis" in url
+def test_req():
+    code, data = req()
+    assert code == 200
+    assert req("20240710")[0] == 200
+
+    code, data = req()
+    assert code == 200
