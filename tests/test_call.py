@@ -1,5 +1,12 @@
-from mov.api.call import gen_url, req, get_key, req2list, list2df, save2df, echo
+from mov.api.call import gen_url, req, get_key, req2list, list2df, save2df, echo, change2df
 import pandas as pd
+
+def test_change2df():
+    df = change2df()
+    assert isinstance(df, pd.DataFrame)
+    num_cols = ['rnum', 'rank', 'rankInten', 'salesAmt', 'audiCnt', 'audiAcc', 'scrnCnt', 'showCnt', 'salesShare', 'salesInten', 'salesChange', 'audiInten', 'audiChange']
+    for c in num_cols:
+        assert df[c].dtype in ['int','in64','float']
 
 def test_echo():
     r = echo("hello")
