@@ -6,7 +6,7 @@ def test_change2df():
     assert isinstance(df, pd.DataFrame)
     num_cols = ['rnum', 'rank', 'rankInten', 'salesAmt', 'audiCnt', 'audiAcc', 'scrnCnt', 'showCnt', 'salesShare', 'salesInten', 'salesChange', 'audiInten', 'audiChange']
     for c in num_cols:
-        assert df[c].dtype in ['int','in64','float']
+        assert df[c].dtype in ['int','int64','float']
 
 def test_echo():
     r = echo("hello")
