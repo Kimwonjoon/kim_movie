@@ -38,3 +38,6 @@ def save2df(load_dt="20120101"):
     print(df.head())
     df.to_parquet('~/tmp/test_parquet', partition_cols = ['load_dt'])
     return df
+
+def echo(yaho):
+    return yaho
