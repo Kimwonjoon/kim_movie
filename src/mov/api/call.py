@@ -5,14 +5,12 @@ def gen_url(load_dt="20120101", req_val = {}):
     base_url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
     key = get_key()
     url = f'{base_url}?key={key}&targetDt={load_dt}'
-    if req_val:
-        for key, value in req_val.items():
-            url = url + f'&{key}={value}'
-
+    for key, value in req_val.items():
+        url = url + f'&{key}={value}'
     return url
 
-def req(load_dt="20120101"):
-    url = gen_url(load_dt)
+def req(load_dt="20120101", url_param = {}):
+    url = gen_url(load_dt, url_param)
     res = requests.get(url)
     data = res.json()
     code = res.status_code
@@ -23,24 +21,27 @@ def get_key():
     key = os.getenv('MOVIE_API_KEY')
     return key
 
-def req2list(load_dt="20120101") -> list:
-    _, data = req(load_dt)
+def req2list(load_dt="20120101", url_param = {}) -> list:
+    _, data = req(load_dt, url_param)
     li = data['boxOfficeResult']['dailyBoxOfficeList']
     return li
 
-def list2df(load_dt="20120101"):
-    li = req2list(load_dt)
+def list2df(load_dt="20120101", url_param = {}):
+    li = req2list(load_dt, url_param)
     df = pd.DataFrame(li)
     return df
 
 def save2df(load_dt="20120101", url_param = {}):
-    df = list2df(load_dt)
+    df = list2df(load_dt, url_param)
     # df에 load_df 컬럼 추가 조회 일자 YYYYMMDD 형식
     # 아래 파일 저장 시 load_dt 기준으로 파티셔닝
     df['load_dt'] = load_dt
     print(df.head())
-    df.to_parquet('~/tmp/test_parquet', partition_cols = ['load_dt'])
     return df
+
+def df2parquet(load_dt="20120101", url_param = {}):
+    df = save2df(load_dt, url_param)
+    df.to_parquet('~/tmp/test_parquet', partition_cols = ['load_dt'])
 
 def echo(yaho):
     return yaho

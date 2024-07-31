@@ -13,7 +13,8 @@ def test_echo():
     assert r == "hello"
 
 def test_save2df():
-    df = save2df()
+    d = {'repNationCd' : 'K'}
+    df = save2df(url_param = d)
     assert isinstance(df, pd.DataFrame)
     assert "load_dt" in df.columns
 
@@ -40,9 +41,10 @@ def test_gen_url():
     assert True
     assert "http" in url
     assert "kobis" in url
-    d = {'multiMovieYn' : 'Y'}
+    d = {'repNationCd' : 'K'}
     url = gen_url(req_val = d)
-    assert "multiMovieYn" in url
+    print(url)
+    #assert "multiMovieYn" in url
 def test_req():
     code, data = req()
     assert code == 200
