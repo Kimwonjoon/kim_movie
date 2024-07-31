@@ -40,6 +40,9 @@ def test_gen_url():
     assert True
     assert "http" in url
     assert "kobis" in url
+    d = {'multiMovieYn' : 'Y'}
+    url = gen_url(req_val = d)
+    assert "multiMovieYn" in url
 def test_req():
     code, data = req()
     assert code == 200

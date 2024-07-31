@@ -1,10 +1,13 @@
 import requests
 import os
 import pandas as pd
-def gen_url(load_dt="20120101"):
+def gen_url(load_dt="20120101", req_val = {}):
     base_url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
     key = get_key()
     url = f'{base_url}?key={key}&targetDt={load_dt}'
+    if req_val:
+        for key, value in req_val.items():
+            url = url + f'&{key}={value}'
 
     return url
 
@@ -30,7 +33,7 @@ def list2df(load_dt="20120101"):
     df = pd.DataFrame(li)
     return df
 
-def save2df(load_dt="20120101"):
+def save2df(load_dt="20120101", url_param = {}):
     df = list2df(load_dt)
     # df에 load_df 컬럼 추가 조회 일자 YYYYMMDD 형식
     # 아래 파일 저장 시 load_dt 기준으로 파티셔닝
