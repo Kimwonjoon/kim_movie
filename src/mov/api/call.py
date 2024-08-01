@@ -39,10 +39,6 @@ def save2df(load_dt="20120101", url_param = {}):
     print(df.head())
     return df
 
-def df2parquet(load_dt="20120101", url_param = {}):
-    df = save2df(load_dt, url_param)
-    df.to_parquet('~/tmp/test_parquet', partition_cols = ['load_dt'])
-
 def echo(yaho):
     return yaho
 
